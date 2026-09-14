@@ -29,15 +29,15 @@ public class ProductService {
         return new ProductResponse(product.getId(), product.getName(), product.getType(), product.getPrice(), product.getQuantity());
     }
 
-    public Page<ProductResponse> productsPage(String search, Pageable pageable) {
-        Page<Product> Products = productRepository.findByProduct(search, pageable);
+    public Page<ProductResponse> productsPage(String search, String type, Integer minPrice, Integer maxPrice, Pageable pageable) {
+        Page<Product> Products = productRepository.findByProduct(search, type, minPrice, maxPrice, pageable);
         return Products.map(product -> new ProductResponse(product.getId(), product.getName(), product.getType(), product.getPrice(), product.getQuantity()));
     }
 
     @Cacheable(value = CacheKeyConstants.SEARCH_PRODUCT)
-    public PagedResponse<ProductResponse> productsPageV2(String search, Pageable pageable) {
+    public PagedResponse<ProductResponse> productsPageV2(String search, String type, Integer minPrice, Integer maxPrice, Pageable pageable) {
         // 캐시가 없는경우에 아래 내용 실행
-        Page<Product> products = productRepository.findByProduct(search, pageable);
+        Page<Product> products = productRepository.findByProduct(search, type, minPrice, maxPrice, pageable);
 
         return PagedResponse.from(products.map(product -> new ProductResponse(product.getId(), product.getName(), product.getType(), product.getPrice(), product.getQuantity())));
     }

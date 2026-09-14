@@ -28,20 +28,26 @@ public class ProductController {
 
     @GetMapping("/products")
     public ResponseEntity<ApiResponse<PagedResponse<ProductResponse>>> productsPage(@RequestParam(required = false) String search,
+                                                                                    @RequestParam(required = false) String type,
+                                                                                    @RequestParam(required = false) Integer minPrice,
+                                                                                    @RequestParam(required = false) Integer maxPrice,
                                                                                     @RequestParam(defaultValue = "0") int page,
                                                                                     @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<ProductResponse> products = productService.productsPage(search, pageable);
+        Page<ProductResponse> products = productService.productsPage(search, type, minPrice, maxPrice, pageable);
         return ResponseEntity.ok(ApiResponse.ok("상품이 조회되었습니다.", PagedResponse.from(products)));
     }
 
     @GetMapping("/products/v2")
     public ResponseEntity<ApiResponse<PagedResponse<ProductResponse>>> productsPageV2(@RequestParam(required = false) String search,
+                                                                                      @RequestParam(required = false) String type,
+                                                                                      @RequestParam(required = false) Integer minPrice,
+                                                                                      @RequestParam(required = false) Integer maxPrice,
                                                                                       @RequestParam(defaultValue = "0") int page,
                                                                                       @RequestParam(defaultValue = "10") int size) {
 
         Pageable pageable = PageRequest.of(page, size);
-        PagedResponse<ProductResponse> products = productService.productsPageV2(search, pageable);
+        PagedResponse<ProductResponse> products = productService.productsPageV2(search, type, minPrice, maxPrice, pageable);
         return ResponseEntity.ok(ApiResponse.ok("상품이 조회되었습니다.", products));
     }
 

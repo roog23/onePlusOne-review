@@ -14,8 +14,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("""
         SELECT p FROM Product p
         WHERE (:search IS NULL OR p.name LIKE CONCAT('%', :search, '%'))
+        AND (:type IS NULL OR p.type = :type)
+        AND (:minPrice IS NULL OR p.price >= :minPrice)
+        AND (:maxPrice IS NULL OR p.price <= :maxPrice)
     """)
-    Page<Product> findByProduct(String search, Pageable pageable);
+    Page<Product> findByProduct(String search, String type, Integer minPrice, Integer maxPrice, Pageable pageable);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select p from Product p where p.id = :id")
