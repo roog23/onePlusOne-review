@@ -12,7 +12,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "products")
+@Table(name = "products",
+    indexes = {
+        @Index(name = "idx_type_price", columnList = "type, price")
+})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
