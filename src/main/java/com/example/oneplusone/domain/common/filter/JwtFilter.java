@@ -33,7 +33,8 @@ public class JwtFilter implements Filter {
         log.info("요청 URI: {}", requestURI);
 
         // 로그인 / 회원가입 요청은 jwt 토큰 없이도 접근 가능하게 허용
-        if (requestURI.startsWith("/auth")) {
+        if (requestURI.startsWith("/auth") ||
+                requestURI.startsWith("/address")) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }

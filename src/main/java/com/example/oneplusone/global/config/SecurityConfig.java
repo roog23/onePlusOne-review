@@ -4,7 +4,6 @@ import com.example.oneplusone.domain.auth.repository.UserRepository;
 import com.example.oneplusone.domain.common.filter.JwtFilter;
 import com.example.oneplusone.domain.common.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,7 +30,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()    // 로그인, 회원가입 등은 모두 허용
+                        .requestMatchers("/auth/**", "/address/**").permitAll()    // 로그인, 회원가입 등은 모두 허용
                         .requestMatchers("/seller/**").hasRole("SELLER") // SELLER 권한만 접근 가능
                         .anyRequest().authenticated()
                 )

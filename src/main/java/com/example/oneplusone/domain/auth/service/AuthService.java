@@ -36,7 +36,10 @@ public class AuthService {
                 request.getNickname(),
                 request.getLoginId(),
                 passwordEncoder.encode(request.getPassword()),
-                role
+                role,
+                request.getZipCode(),
+                request.getAddress(),
+                request.getDetailAddress()
         );
 
         User saved = userRepository.save(user);
