@@ -19,10 +19,9 @@ public class User {
     @Column(nullable = false)
     private String nickname;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String loginId;
 
-    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)

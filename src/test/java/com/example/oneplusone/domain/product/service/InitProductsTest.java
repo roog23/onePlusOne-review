@@ -23,7 +23,7 @@ public class InitProductsTest {
     @Test
     @DisplayName("5만개의 더미 데이터 생성")
     void createProducts() {
-        User user = new User("admin", "admin", "password", UserRole.SELLER);
+        User user = new User("admin", "admin", "password", UserRole.SELLER,"","","");
         User saveUser = userRepository.save(user);
         List<Product> productList = new ArrayList<>();
         for(int i = 1; i <= 50000; i ++){

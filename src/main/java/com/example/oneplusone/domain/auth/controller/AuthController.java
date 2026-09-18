@@ -5,15 +5,13 @@ import com.example.oneplusone.domain.auth.controller.dto.LoginResponse;
 import com.example.oneplusone.domain.auth.controller.dto.SignUpRequest;
 import com.example.oneplusone.domain.auth.controller.dto.SignUpResponse;
 import com.example.oneplusone.domain.auth.service.AuthService;
+import com.example.oneplusone.domain.auth.service.KakaoAuthService;
 import com.example.oneplusone.domain.common.dto.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private final KakaoAuthService kakaoAuthService;
 
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<SignUpResponse>> signup(@Valid @RequestBody SignUpRequest request) {
@@ -37,5 +36,12 @@ public class AuthController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponse.ok("로그인 되었습니다.", response));
+    }
+
+    @GetMapping("/kakao")
+    public ResponseEntity<ApiResponse<LoginResponse>> kakaoLogin(@RequestParam String code) {
+        LoginResponse response = kakaoAuthService.kakaoLogin(code);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.ok("카카오 api를 이용한 로그인이 되었습니다.", response));
     }
 }

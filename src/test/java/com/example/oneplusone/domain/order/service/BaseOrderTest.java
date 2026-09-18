@@ -35,7 +35,7 @@ public class BaseOrderTest {
 
     // 데이터 생성
     protected User getUser(String uniqueLoginId) {
-        User user = new User("nickname", uniqueLoginId, passwordEncoder.encode("password"), UserRole.SELLER);
+        User user = new User("nickname", uniqueLoginId, passwordEncoder.encode("password"), UserRole.SELLER,"","","");
         userRepository.save(user);
         return user;
     }
